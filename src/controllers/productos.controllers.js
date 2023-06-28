@@ -1,4 +1,4 @@
-import Producto from '../models/producto';
+import Producto from "../models/producto";
 
 // Controlador para obtener productos
 export const obtenerProductos = async (req, res) => {
@@ -8,7 +8,7 @@ export const obtenerProductos = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(404).json({
-      mensaje: 'Error al buscar los productos',
+      mensaje: "Error al buscar los productos",
     });
   }
 };
@@ -19,28 +19,41 @@ export const crearProducto = async (req, res) => {
     const productoNuevo = new Producto(req.body);
     await productoNuevo.save();
     res.status(201).json({
-      mensaje: 'El producto fue creado correctamente',
+      mensaje: "El producto fue creado correctamente",
     });
   } catch (error) {
     console.log(error);
     res.status(404).json({
-      mensaje: 'Error al crear al producto',
+      mensaje: "Error al crear al producto",
     });
   }
 };
 
-export const borrarProducto = async (req, res)=>{
-  try{
+export const borrarProducto = async (req, res) => {
+  try {
     //obtener el id y luego solicitar a moongoose el borrar
     console.log(req.params.id);
     await Producto.findByIdAndDelete(req.params.id);
     res.status(200).json({
-      mensaje: 'El producto fue eliminado',
-    })
-  }catch(error){
+      mensaje: "El producto fue eliminado",
+    });
+  } catch (error) {
     console.log(error);
     res.status(404).json({
-      mensaje: 'El producto no pudo ser eliminado',
-    })
+      mensaje: "El producto no pudo ser eliminado",
+    });
   }
-}
+};
+
+export const editarProducto = async (req, res) => {
+  try {
+    //extraer el id del request y el body
+    await Producto.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json({ mensaje: "El producto fue actualizado correctamente" });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      mensaje: "El producto no pudo ser editado",
+    });
+  }
+};
