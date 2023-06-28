@@ -57,3 +57,15 @@ export const editarProducto = async (req, res) => {
     });
   }
 };
+
+export const obtenerProducto = async (req, res) => {
+  try {
+    const producto = await Producto.findById(req.params.id);
+    res.status(200).json(producto);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      mensaje: "No se pudo obtener el producto buscado",
+    });
+  }
+};
