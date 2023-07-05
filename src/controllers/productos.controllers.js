@@ -20,6 +20,7 @@ export const crearProducto = async (req, res) => {
     //trabajar con el resultado de la validacion
     const errors = validationResult(req);
     // errors.isEmpty() true: si esta vacio
+    //pregunto si hay errores
     if(!errors.isEmpty()){
       return res.status(400).json({errores: errors.array()})
     }
