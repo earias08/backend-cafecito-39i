@@ -35,7 +35,12 @@ router
           }else{
             throw new Error('El precio debe estar entre 1 y 10000')
           }
-        })
+        }),
+      check('imagen')
+        .notEmpty()
+        .withMessage('La imagen es un dato obligatorio')
+        .matches(/^(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|png|svg)$/)
+        .withMessage('La imagen debe tener el formato adecuado (jpg, png, svg)')
     ],
     crearProducto
   );
