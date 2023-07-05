@@ -27,7 +27,7 @@ router
 
 router.route("/nuevo").post(
   [
-    check("usuario", "El nombre es obligatorio").not().isEmpty(),
+    check("nombreUsuario", "El nombre es obligatorio").not().isEmpty(),
     check("email", "El email es obligatorio").isEmail(),
     check("password", "El password debe de ser de 6 caracteres")
       .isLength({
