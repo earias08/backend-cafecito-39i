@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true })); //permite en el objeto request 
 app.use(morgan('dev')); //nos da informacion extra en la terminal
 
 //rutas
-// http://localhost:4000/apicafe/productos
+// http://localhost:4000/apicafe/
 
 app.use('/apicafe', productosRouter);
 app.use('/apicafe/auth',usuarioRouter)

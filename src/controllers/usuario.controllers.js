@@ -1,5 +1,6 @@
 // import generarJWT from "../helpers/jwt";
 import Usuario from "../models/usuario";
+import bcrypt from 'bcrypt';
 
 export const login = async (req, res) => {
   try {
@@ -20,7 +21,6 @@ export const login = async (req, res) => {
         mensaje: "Correo o password invalido - password",
       });
     }
-
     //responder que el usuario es correcto
     res.status(200).json({
       mensaje: "El usuario existe",
@@ -37,7 +37,7 @@ export const login = async (req, res) => {
 
 export const crearUsuario = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, password } = req.body;
 
     //verificar si el email ya existe
     let usuario = await Usuario.findOne({ email }); //devulve un null
@@ -50,7 +50,9 @@ export const crearUsuario = async (req, res) => {
     }
     //guardamos el nuevo usuario en la BD
     usuario = new Usuario(req.body);
-
+    //editar el usuario para encriptar la contraseña
+    const salt = bcrypt.genSaltSync(10);
+    usuario.password = bcrypt.hashSync( password, salt)
     await usuario.save();
     res.status(201).json({
       mensaje: "usuario creado",
